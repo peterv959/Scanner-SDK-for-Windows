@@ -54,6 +54,7 @@ CScanToConnectDlg::CScanToConnectDlg(CWnd* pParent /*=NULL*/)
 
 CScanToConnectDlg::~CScanToConnectDlg()
 {
+	ClearImageCache();
 }
 
 void CScanToConnectDlg::DoDataExchange(CDataExchange* pDX)

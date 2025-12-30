@@ -158,6 +158,9 @@ BOOL CImageVideoDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	m_RenderEngine.Attach(m_PicControl);
+#ifdef _DEBUG
+	_CrtSetBreakAlloc(6021);  // Set break allocation for debugging
+#endif
 	return TRUE; 
 }
 
