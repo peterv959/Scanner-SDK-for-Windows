@@ -125,6 +125,7 @@ long CScannerCommands::cmdOpen(SHORT ScannerTypes[TOTAL_SCANNER_TYPES],SHORT NOT
 		SafeArrayPutElement(pSA, &i, &ScannerTypes[i]);
 	}
 	hr = this->ScannerInterface->Open(0, pSA,NOTypes, Status);
+	SafeArrayDestroy(pSA);
 	return hr;
 }
 
@@ -147,6 +148,7 @@ long CScannerCommands::cmdDiscover(BSTR * outXml,long *Status)
 
 	hr = ScannerInterface->GetScanners(&NumScan,pSA,outXml,Status);
 	////OutputDebugStringW(*outXml);
+	SafeArrayDestroy(pSA);
 	return hr;
 }
 
@@ -404,7 +406,7 @@ long CScannerCommands::cmdCaptureImage(wstring ScannerID,int Async,long *Status)
 long CScannerCommands::cmdGetBluetoothPairingBarcode(wstring ScannerID,int Async,long *Status, int protocol, int defaultOption, int size, wstring FilePath)
 {
 	HRESULT hr = S_FALSE;
-	wchar_t tempBuffer[10];
+	wchar_t tempBuffer[_MAX_ITOSTR_BASE10_COUNT];
 	wstring inXml=L"<inArgs><cmdArgs><arg-int>3</arg-int><arg-int>";
 	//enable the secure methode '_itow_s' resolve the unsafe functions
 	_itow_s(protocol, tempBuffer, 10);
@@ -621,8 +623,8 @@ long CScannerCommands::cmdLEDOff(wstring ScannerID,wstring LED,int Async,long *S
 
 long CScannerCommands::cmdRegisterEvents(int nEvents,wstring strEventsIDs,long *Status)
 {
-	wchar_t buf[8];
-	_itow_s(nEvents, buf, 8, 10);
+	wchar_t buf[_MAX_ITOSTR_BASE10_COUNT];
+	_itow_s(nEvents, buf, 10);
 	HRESULT hr = S_FALSE;
 
 	BSTR outXml;
@@ -638,8 +640,8 @@ long CScannerCommands::cmdRegisterEvents(int nEvents,wstring strEventsIDs,long *
 
 long CScannerCommands::cmdUnRegisterEvents(int nEvents,wstring strEventsIDs,long *Status)
 {
-	wchar_t buf[8];
-	_itow_s(nEvents, buf, 8, 10);
+	wchar_t buf[_MAX_ITOSTR_BASE10_COUNT];
+	_itow_s(nEvents, buf, 10);
 	HRESULT hr = S_FALSE;
 
 	BSTR outXml;
@@ -803,9 +805,9 @@ long CScannerCommands::cmdEnableKeyboardEmulator(bool bEnable, int Async, long *
 long CScannerCommands::cmdSetKeyboardEmulatorLocale(int Lang, int Async, long *Status) //VRQW74
 {
 	BSTR outXml;
-	WCHAR Buf[8];
+	wchar_t Buf[_MAX_ITOSTR_BASE10_COUNT];
 
-	_itow_s(Lang, Buf, 8, 10);
+	_itow_s(Lang, Buf, 10);
 
 	wstring inXml = L"<inArgs><cmdArgs><arg-int>";
 	inXml.append(Buf);

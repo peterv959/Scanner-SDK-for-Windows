@@ -875,7 +875,7 @@ void CRTADlg::UpdateRTAGrid(vector<vector<wstring>> eventDetailsList)
 
 			// Set the subitem texts for the subsequent columns
 			for (size_t colIndex = 0; colIndex < event.size(); ++colIndex) {
-				RtaEventsGrid.SetItemText(nIndex, (int) (colIndex + 1), event[colIndex].c_str());
+				RtaEventsGrid.SetItemText(nIndex, static_cast<int>(colIndex + 1), event[colIndex].c_str());
 			}
 		}
 	}

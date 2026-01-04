@@ -243,7 +243,7 @@ SCANNER* CScannerSDKSampleAppDlg::GetScannerInfo(std::wstring ScannerID)
 void CScannerSDKSampleAppDlg::UpdateScannerStatus()
 {
 
-	int ScannerCount = (int)m_ScannerMap.GetCount();
+	int ScannerCount = static_cast<int>(m_ScannerMap.GetCount());
 	txtScannerSummary.Format(_T("Scanner Count=%d"), ScannerCount);
 	// Change to a type-safe map
 	CMap<CString, LPCTSTR, int, int> ScannerTypeCountMap;
@@ -271,7 +271,7 @@ void CScannerSDKSampleAppDlg::UpdateScannerStatus()
 		while(pos != NULL)
 		{
 			ScannerTypeCountMap.GetNextAssoc( pos, scannerType, count );
-			Temp.Format(_T("   |   %s=%d"), scannerType, count);
+			Temp.Format(_T("   |   %s=%d"), (LPCTSTR) scannerType, count);
 			Status += Temp;
 		}
 		txtScannerSummary += Status;
